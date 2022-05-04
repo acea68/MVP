@@ -1,8 +1,9 @@
 {
-  "name": "mvp",
+  "name": "taskmanTrack",
   "version": "1.0.0",
   "description": "project toy story 99",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack --mode=development",
@@ -11,17 +12,23 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/acea68/MVP.git"
+    "url": "git+https://github.com/acea68/taskmanTrack.git"
   },
   "author": "acea68",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/acea68/MVP/issues"
+    "url": "https://github.com/acea68/taskmanTrack/issues"
   },
-  "homepage": "https://github.com/acea68/MVP#readme",
+  "homepage": "https://github.com/acea68/taskmanTrack#readme",
   "dependencies": {
+    "axios": "^0.27.2",
+    "body-parser": "^1.20.0",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.1",
+    "mongoose": "^6.3.2",
     "react": "^18.1.0",
-    "react-dom": "^18.1.0"
+    "react-dom": "^18.1.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.17.10",
