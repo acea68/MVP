@@ -30,12 +30,12 @@ class Search extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='search'>
         <h3>Search by Github Handle & Repo</h3>
         <form onSubmit={this.onSubmitHandler}>
           <input value={this.state.owner} onChange={this.onChangeHandlerOwner} />
           <input value={this.state.repoName} onChange={this.onChangeHandlerRepoName} />
-          <input type="submit" value="Submit" />
+          <input className="btn btn-success" type="submit" value="Submit" />
         </form>
       </div>
     )

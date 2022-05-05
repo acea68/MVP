@@ -23,7 +23,6 @@ class App extends React.Component {
     });
     axios.post('/toyproblems', ownerAndRepo)
       .then(response => {
-        console.log('response from db: ', response.data.toyProblems);
         this.setState({ toyProblems: response.data.toyProblems })
       })
       .catch(error => console.error(error));
@@ -32,9 +31,12 @@ class App extends React.Component {
   componentDidMount() {
     axios.get('/ownerdata/acea68')
       .then(response => {
-        // console.log('CDM: response from db: ', response.data.toyProblems);
         if (response.data && response.data.toyProblems.length > 0) {
-          this.setState({ toyProblems: response.data.toyProblems })
+          this.setState({
+            owner: 'acea68',
+            repoName: 'demo-rfc2202-toy-problems',
+            toyProblems: response.data.toyProblems
+          })
         } else {
           console.log('No data available for this user.')
         }
@@ -44,7 +46,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='taskman'>
         <h1>Taskman Tracker</h1>
         <Search searchHandle={this.searchGithubHandle} />
         {/* <Totals
@@ -52,13 +54,13 @@ class App extends React.Component {
           totalPassing={this.state.totalPassing}
           toyProblems={this.state.toyProblems}
         /> */}
-        <ToyProblemList toyProblems={this.state.toyProblems} />
+        <ToyProblemList
+          toyProblems={this.state.toyProblems}
+          owner={this.state.owner}
+        />
       </div>
     )
   };
 };
 
 export default App;
-
-// toyProblems: [1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6],
-//'http://localhost:3000/toyProblems'
