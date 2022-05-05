@@ -9,10 +9,11 @@ class App extends React.Component {
     this.state = {
       owner: '',
       repoName: '',
-      toyProblems: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6],
+      toyProblems: [],
       totalAttempted: 0,
       totalPassing: 0,
     }
+    this.searchGithubHandle = this.searchGithubHandle.bind(this);
   }
 
   searchGithubHandle(ownerAndRepo) {
@@ -20,18 +21,25 @@ class App extends React.Component {
       owner: ownerAndRepo.owner,
       repoName: ownerAndRepo.repoName
     });
-    axios.post('/toyProblems', ownerAndRepo)
+    axios.post('/toyproblems', ownerAndRepo)
       .then(response => {
-        console.log('response: ', response);
-        this.setState({ toyProblems: response })
+        console.log('response from db: ', response.data.toyProblems);
+        this.setState({ toyProblems: response.data.toyProblems })
       })
-      .catch(error => {
-        console.error(error);
-      })
+      .catch(error => console.error(error));
   }
 
   componentDidMount() {
-    // this.setState({})
+    axios.get('/ownerdata/acea68')
+      .then(response => {
+        // console.log('CDM: response from db: ', response.data.toyProblems);
+        if (response.data && response.data.toyProblems.length > 0) {
+          this.setState({ toyProblems: response.data.toyProblems })
+        } else {
+          console.log('No data available for this user.')
+        }
+      })
+      .catch(error => console.error(error));
   }
 
   render() {
@@ -53,3 +61,4 @@ class App extends React.Component {
 export default App;
 
 // toyProblems: [1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6],
+//'http://localhost:3000/toyProblems'
