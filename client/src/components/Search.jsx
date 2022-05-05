@@ -25,13 +25,13 @@ class Search extends React.Component {
   onSubmitHandler(event) {
     event.preventDefault();
     this.props.searchHandle(this.state);
-    this.setState({ owner: '' });
+    // this.setState({ owner: '' });
   }
 
   render() {
     return (
       <div>
-        <h3>Search by Github Handle</h3>
+        <h3>Search by Github Handle & Repo</h3>
         <form onSubmit={this.onSubmitHandler}>
           <input value={this.state.owner} onChange={this.onChangeHandlerOwner} />
           <input value={this.state.repoName} onChange={this.onChangeHandlerRepoName} />

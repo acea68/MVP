@@ -1,39 +1,54 @@
 import mongoose from 'mongoose';
-mongoose.connect('mongodb://localhost/fetcher', { useNewUrlParser: true });
+mongoose.connect('mongodb://localhost/mvp', { useNewUrlParser: true });
 
-let repoSchema = mongoose.Schema({
-  id: {
-    type: Number,
+let ownersSchema = mongoose.Schema({
+  _id: mongoose.Types.ObjectId, // creates unique id number
+  owner: {
+    type: String,
     unique: true,
     required: true
   },
-  name: {
+  repoName: {
     type: String,
     required: true
   },
-  size: Number,
-  forks_count: Number,
-  html_url: String
-}); // can reduce amount of properties, but nice to have several options to filter search results by
+  toyProblems: [{
+    name: String,
+    html_url: String,
+    notes: String,
+    scores: String
+  }],
+});
 
-let Repo = mongoose.model('Repo', repoSchema);
+let OwnersSchema = mongoose.model('ownersSchema', ownersSchema);
 
-let saveEntry = (repo) => {
-
-  // console.log('repo: ', repo);
-  Repo.update(
-    { id: repo.id },
-    { $setOnInsert: repo },
+let saveEntry = (ownerData) => {
+  // console.log('ownerData: ', ownerData);
+  OwnersSchema.update(
+    { owner: ownerData.owner },
+    { $setOnInsert: ownerData },
     { upsert: true }
   )
-    .then((res) => {
-      // console.log("MongoDB response on save: ", res);
+    .then((response) => {
+      console.log("MongoDB response on save: ", response);
     })
     .catch((error) => {
-      console.warn(error);
+      console.error(error);
     })
 };
 
+let findOwner = (ownerName) => {
+  OwnersSchema.findOne({ owner: ownerName })
+    .then((response) => {
+      console.log("MongoDB response on findOneOwner: ", response);
+      return response
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+};
 
-module.exports.saveEntry = saveEntry;
-module.exports.Repo = Repo;
+export default { OwnersSchema, saveEntry, findOwner };
+
+// module.exports.OwnersSchema = OwnersSchema;
+// module.exports.saveEntry = saveEntry;
