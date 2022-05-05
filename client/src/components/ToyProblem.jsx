@@ -17,8 +17,12 @@ class ToyProblem extends React.Component {
 
   onSubmitHandler(event) {
     event.preventDefault();
-    // this.props.searchHandle(this.state.owner);
-    axios.post('/updateNote', {name: this.props.problem.name, notes: this.state.notes})
+    console.log('this.props, toyProb:', this.props)
+    axios.post('/updatenote', {
+      owner: this.props.owner,
+      name: this.props.problem.name,
+      notes: this.state.notes
+    })
     .then(() => {
       this.setState({ notes: response.data })
     })
@@ -30,16 +34,15 @@ class ToyProblem extends React.Component {
   // }
 
   render() {
-    // console.log('toy problem return:', this.props)
     return (
       <div className='toyRow'>
-        <a href={this.props.problem.html_url}>{this.props.problem.name}</a>
-        <div>{this.props.problem.scores}</div>
+        <a className='toyName' href={this.props.problem.html_url}>{this.props.problem.name}</a>
+        <div className='scoreNum'>{this.props.problem.scores}</div>
         {/* <div># Of Attempts</div> */}
-        <div>
+        <div className='formCol'>
           <form className='notesForm' onSubmit={this.onSubmitHandler}>
             <textarea value={this.state.notes} onChange={this.onChangeHandler} />
-            <input type="submit" value="Save/Update" />
+            <input className="btn btn-primary" type="submit" value="Save/Update" />
           </form>
         </div>
       </div>

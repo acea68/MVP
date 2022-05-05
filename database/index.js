@@ -16,15 +16,14 @@ let ownersSchema = mongoose.Schema({
     name: String,
     html_url: String,
     notes: String,
-    scores: String
+    scores: String,
   }],
 });
 
-let OwnersSchema = mongoose.model('ownersSchema', ownersSchema);
+let OwnersModel = mongoose.model('ownersSchema', ownersSchema);
 
 let saveEntry = (ownerData) => {
-  // console.log('ownerData: ', ownerData);
-  OwnersSchema.update(
+  OwnersModel.update(
     { owner: ownerData.owner },
     { $setOnInsert: ownerData },
     { upsert: true }
@@ -38,9 +37,9 @@ let saveEntry = (ownerData) => {
 };
 
 let findOwner = (ownerName) => {
-  OwnersSchema.findOne({ owner: ownerName })
+  OwnersModel.find({ owner: ownerName })
     .then((response) => {
-      console.log("MongoDB response on findOneOwner: ", response);
+      console.log("MongoDB response on findOwner: ", response);
       return response
     })
     .catch((error) => {
@@ -48,7 +47,11 @@ let findOwner = (ownerName) => {
     })
 };
 
-export default { OwnersSchema, saveEntry, findOwner };
+export default { OwnersModel, saveEntry, findOwner };
 
-// module.exports.OwnersSchema = OwnersSchema;
-// module.exports.saveEntry = saveEntry;
+/*
+    { name: String },
+    { html_url: String },
+    { notes: String },
+    { scores: String },
+    */
